@@ -3,20 +3,26 @@ package com.example.rohsins.thorimun.feature;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.view.View;
+import android.widget.ExpandableListView;
+//import android.widget.LinearLayout;
+//import android.widget.TextView;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
-import org.json.simple.*;
 
 public class MainActivity extends AppCompatActivity {
-
+    ListAdapter listAdapter;
+    ExpandableListView expandableListView;
+    List<String> listNoticeHeader;
+    HashMap<String, List<String>> listNoticeBody;
     String data;
     JSONArray jsonArray;
     Boolean dataReady = false;
@@ -60,30 +66,55 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        expandableListView = (ExpandableListView) findViewById(R.id.expandableListView);
+
         dataThread.start();
 
         while (!dataReady);
 
         try {
-            LinearLayout dLayout = (LinearLayout) findViewById(R.id.dLayout);
-            LinearLayout subLayout = new LinearLayout(MainActivity.this);
-            subLayout.setOrientation(LinearLayout.HORIZONTAL);
-            subLayout.setPadding(10,50,10,0);
-//            subLayout.setScroll
-
-            TextView textView = new TextView(MainActivity.this);
+            listNoticeHeader = new ArrayList<String>();
+            listNoticeBody = new HashMap<String, List<String>>();
+            List<String> child;
 
                 for (int i = 0; i < jsonArray.length(); i++) {
-                    textView.append(jsonArray.getJSONObject(i).getString("Title") + "\n\n");
+                    child = new ArrayList<String>();
+                    listNoticeHeader.add(jsonArray.getJSONObject(i).getString("Title") + "\n");
+                    if (jsonArray.getJSONObject(i).getString("Body").length() != 0) {
+                        child.add(jsonArray.getJSONObject(i).getString("Body"));
+                    }
+                    if (jsonArray.getJSONObject(i).getString("Document").length() != 0) {
+                        child.add(jsonArray.getJSONObject(i).getString("Document"));
+                    }
+                    listNoticeBody.put(listNoticeHeader.get(i), child);
                 }
-//            print(jsonArray.getJSONObject(0).getString("Title"));
-//            textView.setText(jsonArray.getJSONObject(0).getString("Title"));
-//            textView.setText("hello");
-            subLayout.addView(textView);
-            dLayout.addView(subLayout);
+
+            listAdapter = new ListAdapter(this, listNoticeHeader, listNoticeBody);
+
+            expandableListView.setAdapter(listAdapter);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                return false;
+            }
+        });
+
+        expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+            @Override
+            public void onGroupExpand(int groupPosition) {
+
+            }
+        });
+
+        expandableListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
+            @Override
+            public void onGroupCollapse(int groupPosition) {
+
+            }
+        });
     }
 }
