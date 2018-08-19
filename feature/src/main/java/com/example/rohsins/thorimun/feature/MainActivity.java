@@ -1,5 +1,7 @@
 package com.example.rohsins.thorimun.feature;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +17,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONArray;
 
@@ -26,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     String data;
     JSONArray jsonArray;
     Boolean dataReady = false;
+    final String documentString = "PDF Document";
 
     public void print(String value) {
         Log.i("TestIO", value);
@@ -84,7 +88,8 @@ public class MainActivity extends AppCompatActivity {
                         child.add(jsonArray.getJSONObject(i).getString("Body"));
                     }
                     if (jsonArray.getJSONObject(i).getString("Document").length() != 0) {
-                        child.add(jsonArray.getJSONObject(i).getString("Document"));
+//                        child.add(jsonArray.getJSONObject(i).getString("Document"));
+                        child.add(documentString);
                     }
                     listNoticeBody.put(listNoticeHeader.get(i), child);
                 }
@@ -99,6 +104,17 @@ public class MainActivity extends AppCompatActivity {
         expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                if (listAdapter.getChild(groupPosition, childPosition).toString().contentEquals(documentString)) {
+                    try {
+//                        print(jsonArray.getJSONObject(groupPosition).getString("Document"));
+                        String urlLink = jsonArray.getJSONObject(groupPosition).getString("Document");
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri.parse(urlLink));
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
                 return false;
             }
         });
