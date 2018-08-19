@@ -41,7 +41,7 @@ public class ImageAdapter extends PagerAdapter {
                 .findViewById(R.id.image);
 
 
-        imageView.setImageResource(IMAGES.get(position));
+//        imageView.setImageResource(IMAGES.get(position));
 
         view.addView(imageLayout, 0);
 

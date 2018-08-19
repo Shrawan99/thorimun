@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private static ViewPager mPager;
     private static int currentPage = 0;
     private static int NUM_PAGES = 0;
-    private static final Integer[] IMAGES= {R.drawable.ic_launcher_foreground,R.drawable.ic_launcher_foreground,R.drawable.ic_launcher_foreground,R.drawable.ic_launcher_foreground};
+    private static final Integer[] IMAGES= {R.drawable.ic_launcher_foreground,R.mipmap.ic_launcher,R.drawable.ic_launcher_foreground,R.drawable.ic_launcher_foreground};
     private ArrayList<Integer> ImagesArray = new ArrayList<Integer>();
 
     public void print(String value) {
@@ -80,24 +80,10 @@ public class MainActivity extends AppCompatActivity {
             ImagesArray.add(IMAGES[i]);
 
         mPager = (ViewPager) findViewById(R.id.pager);
-
-
         mPager.setAdapter(new ImageAdapter(MainActivity.this,ImagesArray));
-
-
-//        CirclePageIndicator indicator = (CirclePageIndicator)
-//                findViewById(R.id.indicator);
-
-//        indicator.setViewPager(mPager);
-
-        final float density = getResources().getDisplayMetrics().density;
-
-//Set circle indicator radius
-//        indicator.setRadius(5 * density);
 
         NUM_PAGES =IMAGES.length;
 
-        // Auto start of viewpager
         final Handler handler = new Handler();
         final Runnable Update = new Runnable() {
             public void run() {
@@ -114,27 +100,6 @@ public class MainActivity extends AppCompatActivity {
                 handler.post(Update);
             }
         }, 3000, 3000);
-
-        // Pager listener over indicator
-//        indicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-//
-//            @Override
-//            public void onPageSelected(int position) {
-//                currentPage = position;
-//
-//            }
-//
-//            @Override
-//            public void onPageScrolled(int pos, float arg1, int arg2) {
-//
-//            }
-//
-//            @Override
-//            public void onPageScrollStateChanged(int pos) {
-//
-//            }
-//        });
-
     }
 
     @Override
@@ -146,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
 
         dataThread.start();
 
-//        init();
+        init();
 
         while (!dataReady);
 

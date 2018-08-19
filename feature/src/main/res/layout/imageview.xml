@@ -6,9 +6,9 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="300px"
         android:adjustViewBounds="true"
-        android:layout_gravity="center"
+        android:layout_gravity="start"
         android:src="@mipmap/ic_launcher"
         android:scaleType="centerCrop"/>
 

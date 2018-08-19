@@ -6,17 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <android.viewpager.v4.view.ViewPager
+    <android.support.v4.view.ViewPager
         android:id="@+id/pager"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"/>
+        android:layout_alignParentTop="true"
+        android:paddingTop="10px"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:paddingTop="300px">
+        android:paddingTop="330px">
 
     <TextView
         android:layout_width="wrap_content"
@@ -35,7 +36,7 @@
         android:id="@+id/expandableListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="30px"
+        android:layout_marginTop="10px"
         />
 
     </LinearLayout>
